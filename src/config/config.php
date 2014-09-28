@@ -19,7 +19,7 @@ return array(
 	'connections' => [
 
 		// Default connection
-		'd'	=>	[
+		'default'	=>	[
 			'site_url'	=>	'http://magentohost',
 			'user'		=>	'',
 			'key'		=>	'',
@@ -36,6 +36,6 @@ return array(
 		],
 	],
 
-	// Client Persistence in minutes
-	'expires'	=>	'10',
+	// enable to see SOAP stack
+	'show_stack'	=>	false,
 );

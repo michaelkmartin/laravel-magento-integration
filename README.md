@@ -110,8 +110,11 @@ To make working with the SOAP API slightly more intuitive, some request results 
 For SOAP responses that return a group of items, results are returned as object collections containing individual objects. These collections have four basic methods.
 
 **getCollection()** - Returns all items as a group of objects
+
 **getCount()** - Returns number of items in the collection
+
 **getFirstItem()** - Returns the first response item
+
 **getLastItem()** - Returns the last response item
 
     foreach ( Magento::salesOrderList()->getCollection() as $order ) {
@@ -121,7 +124,8 @@ For SOAP responses that return a group of items, results are returned as object 
 ####Objects
 For SOAP responses that return a single array item, or when iterating through a response collection, the MagnetoObject is used. This object comes with a couple methods that should be familiar to a Magento developer
 
-**getData(optional $key)** - Either returns all of an objects values or a single value that matches the provided key
+**getData(optional $key)** - Either returns all of an objects values or a single value that matches the provided key.
+
 **getId()** - Returns the primary key of a given response object
 
 Like a **Varien_Object** you can also use a magic getter to pull information from an object. For example, you can use the following two methods to return the incrementId of an order object
@@ -134,10 +138,6 @@ Like a **Varien_Object** you can also use a magic getter to pull information fro
         // with magic getter
         echo $order->getIncrementId()
     }
-
-to see a list of possible magic getters available for an object, you can run
-
-    print_r( $order->getFunctions() )
 
 ---    
 ####Single Results
@@ -195,6 +195,33 @@ To create a temporary connection
     $orders = Magento::call($connection)->salesOrderList()
     
 ###Helpers
+
+**Getting Magic Getters for an object/collection**
+Though used just to return data, you can use the following to get a list of available functions for a given object or collection
+    
+    // For a collection
+    echo Magento::call()->customerCustomerList()->getFunctions();
+    
+    // For an object
+    $customer->getFunctions();
+
+This will return something like
+
+    Array
+    (
+        [0] => getCustomerId
+        [1] => getCreatedAt
+        [2] => getUpdatedAt
+        [3] => getStoreId
+        [4] => getWebsiteId
+        [5] => getCreatedIn
+        [6] => getEmail
+        [7] => getFirstname
+        [8] => getLastname
+        [9] => getGroupId
+        [10] => getDob
+        [11] => getPasswordHash
+    )
 
 **Test your SOAP connection**
 Returns a boolean by default, but can return headers by flagging the second parameter as true.

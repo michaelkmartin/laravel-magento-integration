@@ -1,6 +1,7 @@
 <?php namespace Tinyrocket\Magento\Objects;
 
 use Tinyrocket\Magento\Objects\MagentoObject;
+use Tinyrocket\Magento\Objects\MagentoObjectCollectionException;
 
 /**
  *  Magento API | Connection Exceptions
@@ -47,6 +48,8 @@ class MagentoObjectCollection {
 
     /**
      *  Constructor
+     *
+     *  @see Varien_Object
      */
     public function __construct()
     {
@@ -88,6 +91,21 @@ class MagentoObjectCollection {
         }
     }
 
+     /**
+      * Get Functions
+      *
+      * Generates a list of available functions for a given object
+      * based on the keys in it's data collection.
+      *
+      * @return mixed
+      */
+     public function getFunctions()
+     {
+        if ( $this->getFirstItem() instanceof MagentoObject ) {
+            return $this->getFirstItem()->getFunctions();
+        }
+     }
+
 
     /**
      *  Get Count
@@ -98,5 +116,4 @@ class MagentoObjectCollection {
     {
         return $this->count;
     }
-
 }

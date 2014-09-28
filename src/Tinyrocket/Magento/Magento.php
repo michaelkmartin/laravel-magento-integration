@@ -60,21 +60,6 @@ class Magento {
 	protected $forgets;
 
 	/**
-	 *	@var debugStartTime
-	 */
-	protected $debugStartTime;
-
-	/**
-	 *	@var debugEndTime
-	 */
-	protected $debugEndTime;
-
-	/**
-	 *	@var debugLastCalledMethod
-	 */
-	protected $debugLastCalledMethod;
-
-	/**
 	 *	Construct Magento Instance
 	 *
 	 *	@return void
@@ -82,9 +67,6 @@ class Magento {
 	public function __construct(Repository $config)
 	{
 		$this->connections = $config->get('magento::connections');
-		// $this->debugStartTime = microtime(true);
-		// $this->debugLastCalledMethod = debug_backtrace();
-
 		if ( is_array($this->connections) ) {
 			$this->batchRegister($this->connections);
 		}
@@ -128,7 +110,6 @@ class Magento {
 		$soap = new MagentoSoapClient($connection);
 		if ( (isset($connection[key($connection)]['version']) && (strtolower($connection[key($connection)]['version']) == 'v1') ) ) {
 			return $soap->call($method, $params);
-
 		} else {
 			return $soap->__call($method, $params);
 		}
@@ -359,24 +340,15 @@ class Magento {
 	/**
 	 *	Deconstructor
 	 *
-	 *	@return bool
+	 *	@return void
 	 */
 	public function __destruct() {
-		// $this->debugEndTime = microtime(true);
-		// $elapsedTime = $this->debugEndTime - $this->debugStartTime;
-		// foreach ( $this->debugLastCalledMethod as $method ) {
-		// 	if ( $method['function'] == '__callStatic' ) {
-		// 		$function = array_values($method['args'])[0];
-		// 		echo sprintf("<pre>Function %s::%s took %s seconds to run.</pre>", __CLASS__, $function, number_format($elapsedTime, 5));
-		// 		break;
-		// 	}
-		// }
   		if ( !is_null($this->forgets) && is_array($this->forgets) ) {
   			foreach ( $this->forgets as $removeKey ) {
   				$this->unregister($removeKey);
   			}
+
   			$this->forgets = null;
   		}
   	}
-
 }

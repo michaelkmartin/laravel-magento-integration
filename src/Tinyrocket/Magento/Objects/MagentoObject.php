@@ -1,5 +1,7 @@
 <?php namespace Tinyrocket\Magento\Objects;
 
+use Tinyrocket\Magento\Objects\MagentoObjectException;
+
 /**
  * 	Magento API | Connection Exceptions
  *
@@ -33,12 +35,7 @@
  */
 class MagentoObject {
 
-     /**
-      * Setter/Getter underscore transformation cache
-      *
-      * @var array
-      */
-     protected static $underscoreCache = array();
+
 
 	/**
      * Object attributes
@@ -47,7 +44,13 @@ class MagentoObject {
      */
     protected $data = array();
 
-
+    /**
+     * Construct
+     *
+     * Set data for the object, if applicable
+     *
+     * @return void
+     */
 	public function __construct()
 	{
 		$args = func_get_args();
@@ -59,48 +62,32 @@ class MagentoObject {
 
      /**
       * Retrieves data from the object
-      *
-      * If $key is empty will return all the data as an array
-      * Otherwise it will return value of the attribute specified by $key
-      *
-      * If $index is specified it will assume that attribute data is an array
-      * and retrieve corresponding member.
-      *
-      * @param string $key
-      * @param string|int $index
-      * @param mixed $default
+      * 
+      * @see Varien_Object
       * @return mixed
       */
-     public function getData($key = null, $index = null)
+     public function getData($key = null)
      {
         // Return everything
-         if (is_null($key)) {
-             return $this->data;
-         }
- 
-         $default = null;
-         if (isset($this->data[$key])) {
-             if (is_null($index)) {
-                 return $this->data[$key];
-             }
- 
-             $value = $this->data[$key];
-             if (is_array($value)) {
-                 if (isset($value[$index])) {
-                     return $value[$index];
-                 }
-                 return null;
-             } elseif (is_string($value)) {
-                 $arr = explode("\n", $value);
-                 return (isset($arr[$index]) && (!empty($arr[$index]) || strlen($arr[$index]) > 0)) ? $arr[$index] : null;
-             } elseif ($value instanceof Varien_Object) {
-                 return $value->getData($index);
-             }
-             return $default;
-         }
-         return $default;
+        if (is_null($key)) {
+            return $this->data;
+        }
+
+        // Return key
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        };
+
+        throw new MagentoObjectException("Key [$key] not found for this item");
      }
 
+     /**
+      * Get Item Id
+      *
+      * This assumes that the first item in the array is the PK
+      *
+      * @return int
+      */
      public function getId()
      {
         if ( isset($this->data) ) {
@@ -109,10 +96,41 @@ class MagentoObject {
      }
 
      /**
+      * Get Functions
+      *
+      * Generates a list of available functions for a given object
+      * based on the keys in it's data collection.
+      *
+      * @return mixed
+      */
+     public function getFunctions()
+     {
+        $functions = array();
+        if ( is_array($this->getData()) ) {
+            foreach ( $this->getData() as $key => $value ) {
+                $functions[] = $this->camelize($key);
+            }
+            echo '<pre>';
+            print_r($functions);
+            echo '</pre>';
+            return;
+        }
+     }
+
+     /**
+      * Camelize
+      *
+      * @return string
+      */
+     public function camelize($key)
+     {
+        return 'get' . implode('', array_map('ucfirst', array_map('strtolower', explode('_', $key))));
+     }
+
+     /**
       * Set/Get attribute wrapper
       *
-      * @param   string $method
-      * @param   array $args
+      * @see Varien_Object
       * @return  mixed
       */
      public function __call($method, $args)
@@ -122,22 +140,16 @@ class MagentoObject {
             $data = $this->getData($key, isset($args[0]) ? $args[0] : null);
             return $data;
          }
-         // throw new \Exception("Invalid method ".get_class($this)."::".$method."(".print_r($args,1).")");
      }
 
      /**
 	  * Converts field names for setters and geters
 	  *
-	  * @param string $name
+      * @see Varien_Object
 	  * @return string
 	  */
 	 protected function underscore($name)
 	 {
-	     if (isset(self::$underscoreCache[$name])) {
-	         return self::$underscoreCache[$name];
-	     }
-	     $result = strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $name));
-	     self::$underscoreCache[$name] = $result;
-	     return $result;
+	     return strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $name));
 	 }
 }

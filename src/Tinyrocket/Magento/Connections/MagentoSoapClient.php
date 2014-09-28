@@ -313,11 +313,6 @@ class MagentoSoapClient extends \SoapClient {
 
 	public function __destruct()
 	{
-		$request = $this->__getLastRequest();
-		$xml = new \SimpleXMLElement($request);
-		echo '<pre><code>';
-		echo $xml->asXML();
-		echo '</code></pre>';
-		// echo '<pre>'.(string)$dom->saveXml().'</pre>';
+
 	}
 }

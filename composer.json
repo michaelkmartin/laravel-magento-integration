@@ -18,7 +18,8 @@
     "autoload": {
         "classmap": [
             "src/migrations",
-            "src/Tinyrocket/Magento/Connections/Exceptions.php"
+            "src/Tinyrocket/Magento/Connections/Exceptions.php",
+            "src/Tinyrocket/Magento/Objects/Exceptions.php"
         ],
         "psr-0": {
             "Tinyrocket\\Magento\\": "src/"
