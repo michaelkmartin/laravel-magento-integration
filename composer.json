@@ -25,11 +25,4 @@
             "Tinyrocket\\Magento\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-     "extra": {
-        "branch-alias": {
-            "dev": "1.0-dev"
-        }
-    }
 }
