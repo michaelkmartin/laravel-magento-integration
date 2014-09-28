@@ -1,0 +1,33 @@
+{
+    "name": "tinyrocket/magento",
+    "description": "A simple Magento Integration using SOAP v1 and v2",
+    "keywords": ["laravel", "magento", "soap"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Kyle Martin",
+            "email": "michael@tinyrocket.co"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/Tinyrocket/Magento/Connections/Exceptions.php"
+        ],
+        "psr-0": {
+            "Tinyrocket\\Magento\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+     "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
