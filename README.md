@@ -3,7 +3,10 @@ Magento SOAP Integration for Laravel
 
 A simple and somewhat intuitive package for managing and interacting with the Magento SOAP Api. Compatible with Laravel 4 and Magneto SOAP v1 & v2.
 
-[![Build Status](https://travis-ci.org/TinyRocket/laravel-magento-integration.svg?branch=master)](https://travis-ci.org/TinyRocket/laravel-magento-integration)
+[![Build Status](https://travis-ci.org/TinyRocket/laravel-magento-integration.svg?branch=master)](https://travis-ci.org/TinyRocket/laravel-magento-integration) [![Latest Stable Version](https://poser.pugx.org/tinyrocket/magento/v/stable.svg)](https://packagist.org/packages/tinyrocket/magento) [![Total Downloads](https://poser.pugx.org/tinyrocket/magento/downloads.svg)](https://packagist.org/packages/tinyrocket/magento) [![Latest Unstable Version](https://poser.pugx.org/tinyrocket/magento/v/unstable.svg)](https://packagist.org/packages/tinyrocket/magento) [![License](https://poser.pugx.org/tinyrocket/magento/license.svg)](https://packagist.org/packages/tinyrocket/magento)
+
+> **Note:** This package is still in the beta phase of development. I'd advise against using to test against a production Magento application. This package is for Laravel 4, if you're looking for a Laravel 3 version of this package, checkout [MatteoCastiglioni's bundle](https://github.com/MatteoCastiglioni/magentoapi)
+
 
 ### Installation
 
